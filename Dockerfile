@@ -67,4 +67,5 @@ RUN --mount=type=bind,target=/tmp/packages/,source=/tmp/packages/,from=builder \
     && for module in $BUILT_MODULES; do \
        apk add --no-cache --allow-untrusted /tmp/packages/nginx-module-${module}-${NGINX_VERSION}*.apk; \
        done \
-    && sed -i '1i load_module /usr/lib/nginx/modules/ngx_http_dav_ext_module.so;' /etc/nginx/nginx.conf   
+    && sed -i '1i load_module modules/ngx_http_dav_ext_module.so;' /etc/nginx/nginx.conf \
+    && sed -i '1i load_module modules/ngx_http_brotli_static_module.so;' /etc/nginx/nginx.conf   
