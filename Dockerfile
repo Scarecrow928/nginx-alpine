@@ -65,5 +65,6 @@ FROM ${NGINX_FROM_IMAGE}
 RUN --mount=type=bind,target=/tmp/packages/,source=/tmp/packages/,from=builder \
     . /tmp/packages/modules.env \
     && for module in $BUILT_MODULES; do \
-           apk add --no-cache --allow-untrusted /tmp/packages/nginx-module-${module}-${NGINX_VERSION}*.apk; \
-       done
+       apk add --no-cache --allow-untrusted /tmp/packages/nginx-module-${module}-${NGINX_VERSION}*.apk; \
+       done \
+    && sed -i '1i load_module /usr/lib/nginx/modules/ngx_http_dav_ext_module.so;' /etc/nginx/nginx.conf   
